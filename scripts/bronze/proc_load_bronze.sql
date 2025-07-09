@@ -1,3 +1,24 @@
+/*
+Procedure: bronze.load_bronze
+
+Purpose:
+- To load raw data from CSV files into the Bronze layer of the Data Warehouse.
+- Populates CRM and ERP tables using `BULK INSERT` after truncating existing data.
+
+Functionality:
+- Tracks and prints load time for each table for performance monitoring.
+- Uses TRY-CATCH for error handling and prints relevant error messages.
+- Separates CRM and ERP loads with clear logging for better traceability.
+
+Warning:
+- This procedure truncates all existing data in the Bronze tables before loading.
+- Ensure correct file paths and permissions are set before execution.
+- CSV files must have headers (starts from second row), and comma as field separator.
+
+Execution:
+EXEC bronze.load_bronze
+*/
+
 CREATE OR ALTER PROCEDURE bronze.load_bronze as
 BEGIN
 	DECLARE @start_time DATETIME, @end_time DATETIME, @bstart DATETIME, @bend DATETIME;
@@ -113,5 +134,3 @@ BEGIN
 		PRINT '============================================='
 	END CATCH
 END
-
-EXEC bronze.load_bronze
