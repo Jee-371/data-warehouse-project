@@ -1,3 +1,11 @@
+/*
+Purpose: Drop and recreate raw layer (bronze) tables for CRM and ERP systems.
+
+Note:
+- Existing tables will be dropped if they exist.
+- Ensure backup or downstream dependencies are accounted for before running this script.
+*/
+
 IF OBJECT_ID ('bronze.crm_cust_info','U') IS NOT NULL
 	DROP TABLE bronze.crm_cust_info;
 
