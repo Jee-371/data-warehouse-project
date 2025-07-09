@@ -1,3 +1,33 @@
+/*
+Purpose: Create Gold Layer Views for Analytical Consumption
+
+Overview:
+- Gold layer serves as the presentation/consumption layer in the data warehouse.
+- Data is structured into dimensional (dim) and fact views following a star schema model.
+- Views consolidate cleansed Silver layer data into business-friendly formats.
+
+Views:
+
+1. gold.dim_customers
+   - Customer dimension combining CRM and ERP attributes.
+   - Resolves gender using CRM first, and falls back on ERP if needed.
+   - Adds surrogate key (customer_key) via ROW_NUMBER for BI tools.
+
+2. gold.dim_products
+   - Product dimension enriched with ERP category metadata.
+   - Filters only current (active) products by checking for NULL `prd_end_dt`.
+   - Adds surrogate key (product_key) via ROW_NUMBER.
+
+3. gold.fact_sales
+   - Sales fact table linking to both customer and product dimensions.
+   - Joins Silver CRM sales with Gold layer dimensions to support star schema design.
+   - Includes order dates, pricing, and quantity for sales analytics.
+
+Warning:
+- Ensure Silver layer data is fully loaded and consistent before creating or querying these views.
+- These views are read-only abstractions and will always reflect the current state of the underlying Silver data.
+*/
+
 CREATE VIEW gold.dim_customers AS
 SELECT
 	ROW_NUMBER() OVER (ORDER BY cst_id) AS customer_key,
