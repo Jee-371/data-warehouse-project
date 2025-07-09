@@ -1,4 +1,28 @@
+/*
+Procedure: silver.load_silver
+
+Purpose:
+- To cleanse, transform, and load data from the Bronze layer into the Silver layer of the Data Warehouse.
+
+Key Features:
+- Ensures data quality by:
+  • Trimming and standardizing text fields
+  • Replacing codes with descriptive values (e.g., 'M' → 'Married', 'F' → 'Female')
+  • Validating and converting date formats from integers or strings to DATE type
+  • Handling missing, malformed, or incorrect values using default logic or calculations
+
+- Tracks load time for performance monitoring of each table and the entire batch.
+- Uses `TRUNCATE` before inserting to ensure fresh data for every run.
+- Implements robust error handling using TRY-CATCH to catch and print errors if any step fails.
+
+Warning:
+- This procedure **truncates** Silver layer tables before loading.
+- Ensure no active sessions are querying these tables during execution.
+- The procedure assumes that Bronze layer tables have been properly populated before running.
+
+Execution:
 EXEC silver.load_silver
+*/
 
 CREATE OR ALTER PROCEDURE silver.load_silver AS
 BEGIN
