@@ -1,3 +1,24 @@
+/*
+Purpose: Create Silver Layer Tables for Cleansed and Structured Data
+
+Overview:
+- Silver layer serves as the cleansed and semi-transformed staging area in the Data Warehouse.
+- These tables are enhanced versions of Bronze layer data with standardized formats and derived fields.
+- A column `dwh_create_date` is added to each table to track data load timestamp.
+
+Warning:
+- Existing Silver layer tables will be dropped and recreated.
+- Ensure downstream dependencies are managed before executing.
+
+Tables:
+1. silver.crm_cust_info         -- Cleansed CRM customer information with ingestion timestamp
+2. silver.crm_prd_info          -- CRM product data with product category reference
+3. silver.crm_sales_details     -- CRM sales transactions with corrected date types
+4. silver.erp_cust_az12         -- ERP customer demographic data
+5. silver.erp_loc_a101          -- ERP customer location details
+6. silver.erp_px_cat_g1v2       -- ERP product category hierarchy
+*/
+
 IF OBJECT_ID ('silver.crm_cust_info','U') IS NOT NULL
 	DROP TABLE silver.crm_cust_info;
 
